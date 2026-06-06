@@ -1,69 +1,433 @@
 * {
-    padding: 0;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    list-style: none;
-    list-style-type: none;
-}
-
-a {
-    text-decoration: none;
+    font-family: Arial, sans-serif;
 }
 
 body {
-    background: #222222;
+    background: #05070d;
+    color: white;
+    overflow-x: hidden;
 }
 
-a {
-    position: absolute;
-    top: 50%;
+#bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.transition-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(4, 7, 16, 0.5), rgba(0, 0, 0, 1));
+    transform: scaleY(0);
+    transform-origin: top;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* HEADER */
+.glass {
+    position: fixed;
+    top: 20px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.5s ease-in-out;
-    width: 240px;
-    height: 80px;
-    line-height: 80px;
-    color: transparent;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 12px 20px;
+
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    z-index: 1000;
+}
+
+.glass nav a {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.glass nav a:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* PANELS */
+.panel {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10vw;
+}
+
+.hero {
     text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 6px;
-    font-size: 28px;
-    background: #ff0;
-    border: 2px solid #ff0;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+}
+
+.hero h1 {
+    font-size: 4vw;
+    letter-spacing: 2px;
+}
+
+/* reveal base */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.fade {
+    opacity: 0;
+}
+
+.story {
+    position: relative;
+}
+
+/* header */
+.story-header {
+    margin-bottom: 60px;
+}
+
+/* timeline spine */
+.timeline {
+    position: relative;
+    margin-left: 40px;
+    padding-left: 40px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #66ccff, transparent);
+    opacity: 0.4;
+}
+
+/* step */
+.step {
+    position: relative;
+    margin-bottom: 50px;
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* glowing dot */
+.dot {
+    position: absolute;
+    left: -45px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    background: #66ccff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #66ccff;
+
+    transition: 0.4s;
+}
+
+/* content card */
+.content {
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 18px 22px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s ease;
+}
+
+.content:hover {
+    transform: translateX(8px);
+    background: rgba(102, 204, 255, 0.08);
+}
+
+.content h3 {
+    margin-bottom: 6px;
+}
+
+/* work */
+
+/* =========================
+   WORK 3D CONTROL ROOM
+========================= */
+
+.work {
+    position: relative;
+    padding: 140px 10vw;
+    perspective: 1200px;
+    transform-style: preserve-3d;
     overflow: hidden;
 }
 
-a::before {
-    content: attr(data-title);
+/* -------------------------
+     HUD BACKGROUND LINES
+  ------------------------- */
+.work-hud {
     position: absolute;
-    top: 0;
-    left: 0;
-    background: #222222;
-    color: #fff;
-    width: 100%;
-    height: 100%;
-    transition: 0.5s;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.15;
 }
 
-a::after {
-    content: attr(data-title);
+.hud-line {
     position: absolute;
-    top: 100%;
-    left: -100%;
-    background: #222222;
-    color: #fff;
-    width: 100%;
-    height: 100%;
-    transition: 0.5s;
+    width: 200%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #66ccff, transparent);
+    animation: scan 6s linear infinite;
 }
 
-a:hover::before {
-    top: -100%;
-    left: 100%;
+.hud-line:nth-child(1) {
+    top: 20%;
+}
+.hud-line:nth-child(2) {
+    top: 50%;
+    animation-delay: 2s;
+}
+.hud-line:nth-child(3) {
+    top: 80%;
+    animation-delay: 4s;
 }
 
-a:hover::after {
-    top: 0;
+@keyframes scan {
+    from {
+        transform: translateX(-50%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+/* -------------------------
+     DEPTH LAYERS
+  ------------------------- */
+.depth-layer {
+    transform: translateZ(80px);
+}
+
+/* -------------------------
+     STATS FLOATING PANEL
+  ------------------------- */
+.work-stats {
+    display: flex;
+    gap: 12px;
+    margin: 30px 0 60px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    padding: 10px 14px;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    font-family: monospace;
+    backdrop-filter: blur(10px);
+
+    transform: translateZ(40px);
+}
+
+/* -------------------------
+     3D GRID
+  ------------------------- */
+.work-3d-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+
+    transform-style: preserve-3d;
+}
+
+/* -------------------------
+     3D CARDS (CORE EFFECT)
+  ------------------------- */
+.work-card {
+    position: relative;
+
+    padding: 22px;
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(14px);
+
+    transform-style: preserve-3d;
+
+    /* base depth */
+    transform: translateZ(0px);
+
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* DIFFERENT DEPTH LEVELS */
+.depth-1 {
+    transform: translateZ(40px);
+}
+.depth-2 {
+    transform: translateZ(80px);
+}
+.depth-3 {
+    transform: translateZ(120px);
+}
+
+/* hover = fake camera push */
+.work-card:hover {
+    transform: translateZ(140px) scale(1.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(102, 204, 255, 0.15);
+}
+
+/* terminal */
+.terminal {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+
+    width: 500px;
+    height: 320px;
+
+    opacity: 0;
+    transform: translate3d(0px, 0px, 0px) scale(0.98);
+    will-change: transform;
+
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(102, 204, 255, 0.15);
+    border-radius: 12px;
+
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    font-family: monospace;
+
+    z-index: 999;
+}
+
+/* HEADER (drag handle) */
+.terminal-header {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+
+    cursor: grab;
+    user-select: none;
+
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(102, 204, 255, 0.1);
+}
+
+.terminal-header:active {
+    cursor: grabbing;
+}
+
+.terminal-header .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #66ccff;
+    box-shadow: 0 0 10px #66ccff;
+}
+
+.terminal-header .title {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#terminal-output {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.line {
+    opacity: 0;
+    transform: translateY(10px);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+}
+
+.line .time {
+    color: #66ccff;
+    margin-right: 8px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: #66ccff;
+    margin-left: 4px;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.taskbar {
+    position: fixed;
+    bottom: 0;
     left: 0;
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px;
+
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 999999;
+}
+
+.taskbar-item {
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    margin-right: 40px;
+
+    background: rgba(102, 204, 255, 0.08);
+    border: 1px solid rgba(102, 204, 255, 0.2);
+    color: white;
+    font-size: 12px;
+
+    transition: 0.2s;
+}
+
+.taskbar-item:hover {
+    transform: translateY(-2px);
+    background: rgba(102, 204, 255, 0.15);
+}
+
+.min-btn {
+    margin-left: auto;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0 8px;
+}
+
+.min-btn:hover {
+    color: #66ccff;
 }
