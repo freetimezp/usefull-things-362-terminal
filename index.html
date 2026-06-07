@@ -3,17 +3,18 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Cinematic Scroll App</title>
-
         <link rel="stylesheet" href="./assets/css/style.css" />
+        <title>project</title>
     </head>
 
     <body>
         <canvas id="bg"></canvas>
+
         <div class="transition-layer"></div>
 
         <header class="glass">
             <div class="logo">UI/Terminal</div>
+
             <nav>
                 <a href="#hero">Home</a>
                 <a href="#story">Story</a>
@@ -21,14 +22,16 @@
             </nav>
         </header>
 
-        <section id="hero" class="panel hero">
+        <section class="panel hero" id="hero">
             <h1 class="split">Future Interface Experience</h1>
+
             <p class="fade">Scroll to explore a cinematic UI system</p>
         </section>
 
-        <section id="story" class="panel story">
+        <section class="panel story" id="story">
             <div class="story-header">
                 <h2 class="reveal">System Narrative</h2>
+
                 <p class="reveal">A live sequence of interface evolution</p>
             </div>
 
@@ -59,32 +62,27 @@
             </div>
         </section>
 
-        <section id="work" class="panel work">
-            <!-- ambient HUD layer -->
+        <section class="panel work" id="work">
             <div class="work-hud">
                 <div class="hud-line"></div>
                 <div class="hud-line"></div>
                 <div class="hud-line"></div>
             </div>
 
-            <!-- HEADER DEPTH LAYER -->
             <div class="work-header depth-layer">
                 <h2 class="reveal">CONTROL ROOM</h2>
+
                 <p class="reveal">Neural workspace / system overview</p>
             </div>
 
-            <!-- FLOATING STATS -->
             <div class="work-stats depth-layer">
                 <div class="stat">CPU <span id="cpu">32%</span></div>
-
                 <div class="stat">GPU <span id="gpu">61%</span></div>
+                <div class="stat">FPS <span id="fps">60%</span></div>
 
-                <div class="stat">FPS <span id="fps">60</span></div>
-
-                <div class="stat status">SYSTEM ONLINE</div>
+                <div class="stat status">SESTEM ONLINE</div>
             </div>
 
-            <!-- 3D FLOATING GRID -->
             <div class="work-3d-grid">
                 <div class="work-card depth-1">
                     <h3>Neural UI Core</h3>
@@ -109,7 +107,7 @@
         </section>
 
         <section class="panel end">
-            <h2 class="reveal">( next content )</h2>
+            <h3 class="reveal">( next content )</h3>
         </section>
 
         <div class="terminal" id="terminal">
@@ -129,14 +127,12 @@
             </div>
         </div>
 
-        <!-- GSAP -->
-        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
 
-        <!-- Lenis -->
         <script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
 
         <script src="./assets/js/main.js"></script>

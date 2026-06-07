@@ -1,8 +1,5 @@
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
-/* -------------------------
-   LENIS smooth scroll
-------------------------- */
 const lenis = new Lenis({
     duration: 1.2,
     smoothWheel: true,
@@ -17,19 +14,27 @@ requestAnimationFrame(raf);
 lenis.on("scroll", (e) => {
     ScrollTrigger.update();
 
-    // subtle depth shift
     particles.rotation.z = e.scroll * 0.0001;
 });
 
-/* -------------------------
-   HERO INTRO SEQUENCE
-------------------------- */
 window.addEventListener("load", () => {
     const tl = gsap.timeline();
 
-    tl.from(".glass", { y: -30, opacity: 0, duration: 0.8 })
-        .from(".hero h1", { y: 60, opacity: 0, duration: 1 })
-        .from(".hero .fade", { opacity: 0, y: 20, duration: 0.8 });
+    tl.from(".glass", {
+        y: -30,
+        opacity: 0,
+        duration: 0.8,
+    })
+        .from(".hero h1", {
+            y: 60,
+            opacity: 0,
+            duration: 1,
+        })
+        .from(".hero .fade", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+        });
 
     gsap.set(".terminal", {
         opacity: 0,
@@ -38,13 +43,10 @@ window.addEventListener("load", () => {
     });
 });
 
-/* -------------------------
-   SIMPLE "SplitText" effect
-   (manual char split)
-------------------------- */
 const split = document.querySelector(".split");
+
 if (split) {
-    const text = split.innerText;
+    const text = split.textContent;
     split.innerHTML = "";
 
     text.split("").forEach((char) => {
@@ -63,28 +65,24 @@ if (split) {
     });
 }
 
-/* -------------------------
-   SCROLL TRIGGER SECTIONS
-------------------------- */
 gsap.utils.toArray(".reveal").forEach((el) => {
     gsap.to(el, {
         scrollTrigger: {
             trigger: el,
             start: "top 85%",
         },
+
         opacity: 1,
         y: 0,
         duration: 1,
-        ease: "power3.out",
+        ease: "pwoer3.out",
     });
 });
 
-/* -------------------------
-   HERO PARALLAX EFFECT
-------------------------- */
 gsap.to(".hero h1", {
     scale: 1.2,
     opacity: 0,
+
     scrollTrigger: {
         trigger: ".hero",
         start: "top top",
@@ -93,10 +91,7 @@ gsap.to(".hero h1", {
     },
 });
 
-/* -------------------------
-   THREE.JS BACKGROUND
-------------------------- */
-
+//three canvas
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -109,13 +104,10 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-/* -------------------------
-   PARTICLES
-------------------------- */
 const particlesCount = 1200;
 const positions = new Float32Array(particlesCount * 3);
 
-for (let i = 0; i < particlesCount * 3; i++) {
+for (let i = 0; i < particlesCount; i++) {
     positions[i] = (Math.random() - 0.5) * 10;
 }
 
@@ -134,9 +126,6 @@ scene.add(particles);
 
 camera.position.z = 3;
 
-/* -------------------------
-   ANIMATION LOOP
-------------------------- */
 function animate() {
     requestAnimationFrame(animate);
 
@@ -148,9 +137,6 @@ function animate() {
 
 animate();
 
-/* -------------------------
-   RESIZE HANDLER
-------------------------- */
 window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -158,10 +144,7 @@ window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-/* -------------------------
-   PAGE TRANSITION SYSTEM
-------------------------- */
-
+//transition layer
 const transitionLayer = document.querySelector(".transition-layer");
 
 function pageWipe(callback) {
@@ -211,17 +194,19 @@ gsap.utils.toArray("section").forEach((sec) => {
     });
 });
 
+//steps
 gsap.utils.toArray(".step").forEach((step, i) => {
     gsap.to(step, {
         scrollTrigger: {
             trigger: step,
             start: "top 85%",
         },
+
         opacity: 1,
         y: 0,
         duration: 0.8,
         delay: i * 0.05,
-        ease: "power3.out",
+        ease: "pwoer3.out",
     });
 });
 
@@ -247,6 +232,9 @@ const terminal = document.getElementById("terminal-output");
 
 let offsetX = 0;
 let offsetY = 0;
+
+let opened = false;
+let index = 0;
 
 let terminalActive = false;
 
@@ -278,14 +266,17 @@ ScrollTrigger.create({
     trigger: ".story",
     start: "top 80%",
     once: true,
+
     onEnter: () => {
-        if (terminalActive) return; // 🚨 important guard
+        if (terminalActive) return;
+
         startStream();
     },
 });
 
 function getTime() {
     const d = new Date();
+
     return d.toLocaleTimeString();
 }
 
@@ -301,6 +292,7 @@ function typeLine(text, callback) {
 
     line.appendChild(time);
     line.appendChild(content);
+
     terminal.appendChild(line);
 
     let i = 0;
@@ -321,8 +313,6 @@ function typeLine(text, callback) {
     type();
 }
 
-let opened = false;
-
 function openTerminal(callback) {
     if (opened) {
         callback?.();
@@ -337,6 +327,7 @@ function openTerminal(callback) {
         scale: 1,
         duration: 0.8,
         ease: "power3.out",
+
         onStart: () => {
             gsap.set(".terminal", { display: "block" });
         },
@@ -344,19 +335,19 @@ function openTerminal(callback) {
     });
 }
 
-let index = 0;
-
 function startStream() {
     if (index >= messages.length) return;
 
     openTerminal(() => {
         typeLine(messages[index], () => {
             index++;
+
             setTimeout(startStream, 500);
         });
     });
 }
 
+//draggable
 Draggable.create(terminalEl, {
     type: "x,y",
     trigger: dragHandle,
@@ -429,7 +420,7 @@ document.getElementById("minimize-btn").addEventListener("click", (e) => {
     minimizeTerminal();
 });
 
-//work
+//works
 gsap.to(".work-card", {
     scrollTrigger: {
         trigger: "#work",
